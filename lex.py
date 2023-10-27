@@ -35,8 +35,11 @@ COMMA       = "COMMA"
 GT          = "GT"
 LT          = "LT"
 
+LANG_NUMBERS = list(map(str, range(0, 10)))
+LANG_NUMBERS_FLOAT = LANG_NUMBERS + ["."]
+
 LANG_FIRST_LETTER_IDENT = [chr(a) for a in list(range(65, 91)) + list(range(97, 123))]
-LANG_IDENT = LANG_FIRST_LETTER_IDENT + ["_"] + list(range(0, 10))
+LANG_IDENT = LANG_FIRST_LETTER_IDENT + ["_"] + LANG_NUMBERS
 LANG_RESERVED = ["int", "float", "while", "if", "return"]
 LANG_PAIRS = ["(", ")", "{", "}"]
 LANG_OPERATORS = ["!", "-", "+", "=", "/", "*", ">", "<"]
@@ -55,6 +58,7 @@ class Token():
 buffer = ""
 tokens = []
 ident_flag = False 
+numerical_flag = False
 for character in gen:
     if not ident_flag and character in LANG_FIRST_LETTER_IDENT:
         ident_flag = True
@@ -72,6 +76,19 @@ for character in gen:
             elif buffer == "return": tokens.append(Token(RETURN))
         ident_flag = False
         buffer = ""
+
+    if not numerical_flag and character in LANG_NUMBERS and not ident_flag:
+        buffer += character
+        numerical_flag = True
+    elif numerical_flag:
+        if character in LANG_NUMBERS_FLOAT:
+            buffer += character
+        else:
+            if "." in buffer: tokens.append(Token(FLOAT, buffer))
+            else: tokens.append(Token(INT, buffer))
+            numerical_flag = False
+            buffer = ""
+
 
     if character == ",": tokens.append(Token(COMMA))
 
