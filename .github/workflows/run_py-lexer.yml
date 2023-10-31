@@ -1,0 +1,48 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Run_py-lexer
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: [ self-hosted ]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Install diffutils
+        run: sudo apt-get update && sudo apt-get install -y diffutils 
+        # Install diffutils package which includes the diff command
+        
+      # Runs a set of commands using the runners shell
+      - name: Compare differences in outputs
+        run: |
+          files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          
+          : # iterate through files
+          for file in $files; do
+            cat $file.c
+            python3 py.lex > committed_output.txt
+            : # compare differences
+            diff committed_output.txt $file.txt > output_diff.txt || true
+            if [ -s output_diff.txt ]; then
+              echo "Outputs are different"
+              cat output_diff.txt
+              exit 1
+            else
+              echo "Outputs are identical"
+            fi
+          done
