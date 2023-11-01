@@ -12,7 +12,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+
   build:
     # The type of runner that the job will run on
     runs-on: [ self-hosted ]
@@ -29,15 +29,19 @@ jobs:
         
       # Runs a set of commands using the runners shell
       - name: Compare differences in outputs
+      # iterate through files
+      # run python lexer on committed file
+      # compare committedoutput.txt to the file's output
+      # output the differences
         run: |
           files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
           
           : # iterate through files
           for file in $files; do
-            cat $file.c
+            cat $file
             python3 py.lex > committed_output.txt
             : # compare differences
-            diff committed_output.txt $file.txt > output_diff.txt || true
+            diff committed_output.txt $file.out > output_diff.txt || true
             if [ -s output_diff.txt ]; then
               echo "Outputs are different"
               cat output_diff.txt
