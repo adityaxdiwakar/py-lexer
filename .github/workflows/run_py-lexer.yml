@@ -36,11 +36,10 @@ jobs:
         run: |
           files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
           
-          : # iterate through files
           for file in $files; do
             cat $file
             python3 py.lex > committed_output.txt
-            : # compare differences
+            
             diff committed_output.txt $file.out > output_diff.txt || true
             if [ -s output_diff.txt ]; then
               echo "Outputs are different"
