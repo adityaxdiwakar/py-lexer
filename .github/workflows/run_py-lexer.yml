@@ -13,7 +13,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-  build:
+  lexertest:
     # The type of runner that the job will run on
     runs-on: [ self-hosted ]
 
@@ -36,9 +36,14 @@ jobs:
         run: |
           files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
           
-          for file in $files; do
-            cat $file
+          committedList=' ' read -ra file_array <<< "$files"
+                    
+          for file in "${file_array[@]}"; do
+            file_extension="${file##*.}"
+            echo "Committed file: $file, Extension: $file_extension"
+            cat $file.$file_extension
             python3 py.lex > committed_output.txt
+            
             
             diff committed_output.txt $file.out > output_diff.txt || true
             if [ -s output_diff.txt ]; then
