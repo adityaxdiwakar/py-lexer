@@ -38,7 +38,7 @@ jobs:
           do
             if [ -f "$file" ]; then
               echo "Testing $file against lexer"
-              base=$(basename "$filepath")
+              base=$(basename "$file")
               name="${base%.*}"
               cat $file | python3 lex.py > output
               
