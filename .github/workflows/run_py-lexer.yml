@@ -38,12 +38,11 @@ jobs:
           do
             if [ -f "$file" ]; then
               echo "Testing $file against lexer"
-              name="${file%.*}"
-              echo $file
-              cat $file
+              base=$(basename "$filepath")
+              name="${base%.*}"
               cat $file | python3 lex.py > output
               
-              diff output "tests/expected/$name.out" > output_diff
+              diff output "tests/expected/$base.out" > output_diff
               status = $?
               if [ status -eq 0]; then
                 echo "OK."
