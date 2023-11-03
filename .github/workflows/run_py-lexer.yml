@@ -47,7 +47,6 @@ jobs:
               status = $?
               if [ status -eq 0]; then
                 echo "OK."
-              fi
               else
                 echo "Failed. See diff below."
                 cat output_diff
