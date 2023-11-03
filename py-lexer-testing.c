@@ -1,0 +1,21 @@
+int add(int a, int b) {
+    return a + b;
+}
+/*
+INT_WORD
+IDENT(add)
+LPAREN
+INT_WORD
+IDENT(a)
+COMMA
+INT_WORD
+IDENT(b)
+RPAREN
+LBRACK
+RETURN
+IDENT(a)
+PLUS
+IDENT(b)
+SEMI
+RBRACK
+*/
