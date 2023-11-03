@@ -1,12 +1,3 @@
-int main() {
-    int a = 5;
-    float b = 6.7;
-    while (a < 10) {
-        a++;
-    }
-    return 0;
-}
-/*
 INT_WORD
 IDENT(main)
 LPAREN
@@ -30,12 +21,12 @@ INT(10)
 RPAREN
 LBRACK
 IDENT(a)
-PLUSEQ
-INT
+PLUS
+EQUALS
+INT(3)
 SEMI
 RBRACK
 RETURN
-INT
+INT(0)
 SEMI
 RBRACK
-*/
