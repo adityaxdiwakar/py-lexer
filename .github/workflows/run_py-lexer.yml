@@ -42,7 +42,7 @@ jobs:
               name="${base%.*}"
               cat $file | python3 lex.py > output
               
-              diff output "tests/expected/$base.out" > output_diff
+              diff output "tests/expected/$name.out" > output_diff
               status = $?
               if [ status -eq 0]; then
                 echo "OK."
