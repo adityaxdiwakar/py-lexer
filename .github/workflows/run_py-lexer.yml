@@ -36,8 +36,8 @@ jobs:
         run: |
           for file in tests/*
           do
-            echo "Testing $file against lexer"
             if [ -f "$file" ]; then
+              echo "Testing $file against lexer"
               name="${file%.*}"
               cat $file | python3 lex.py > output
               
