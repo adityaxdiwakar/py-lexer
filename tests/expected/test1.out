@@ -12,6 +12,7 @@ EQUALS
 INT(3)
 SEMI
 IDENT(scanf)
+LPAREN
 STR(%d%d)
 COMMA
 IDENT(a)

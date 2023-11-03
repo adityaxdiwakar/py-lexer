@@ -6,8 +6,7 @@ name: Run_py-lexer
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-
-  # Allows you to run this workflow manually from the Actions tab
+# Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -34,22 +33,5 @@ jobs:
       # compare committedoutput.txt to the file's output
       # output the differences
         run: |
-          for file in tests/*
-          do
-            if [ -f "$file" ]; then
-              echo "Testing $file against lexer"
-              base=$(basename "$file")
-              name="${base%.*}"
-              cat $file | python3 lex.py > output
-              
-              diff output "tests/expected/$name.out" > output_diff
-              status=$?
-              if [ status != 0 ]; then
-                echo "OK."
-              else
-                echo "Failed. See diff below."
-                cat output_diff
-                exit 1
-              fi
-            fi
-          done
+          chmod +x tests/run_all.sh
+          ./tests/run_all.sh
