@@ -1,26 +1,22 @@
-void someFunction() {
-    int x;
-    if (x > 0) {
-        int y = 10;
-    } else {
-       int y = -10;
-    }
-}
-/*
+VOID_WORD
 IDENT(someFunction)
 LPAREN
 RPAREN
 LBRACK
+INT_WORD
+IDENT(x)
+SEMI
 IF
 LPAREN
 IDENT(x)
 GT
-INT
+INT(0)
 RPAREN
 LBRACK
+INT_WORD
 IDENT(y)
 EQUALS
-INT
+INT(10)
 SEMI
 RBRACK
 ELSE
@@ -28,7 +24,7 @@ LBRACK
 IDENT(y)
 EQUALS
 SUB
-INT
+INT(10)
 SEMI
 RBRACK
-*/
+RBRACK
