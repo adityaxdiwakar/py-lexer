@@ -34,25 +34,21 @@ jobs:
       # compare committedoutput.txt to the file's output
       # output the differences
         run: |
-          files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-          
-          committedList=' ' read -ra file_array <<< "$files"
-                    
-          for file in "${file_array[@]}"; do
-            file_extension="${file##*.}"
-            echo "Committed file: $file, Extension: $file_extension"
-            cat $file.$file_extension
-            python3 py.lex > committed_output.txt
-            
-            gcc $file.$file_extension
-            ./a.out > expected_output.txt
-            
-            diff committed_output.txt expected_output.txt > output_diff.txt || true
-            if [ -s output_diff.txt ]; then
-              echo "Outputs are different"
-              cat output_diff.txt
-              exit 1
-            else
-              echo "Outputs are identical"
+          for file in tests/*
+          do
+            echo "Testing $file against lexer"
+            if [ -f "$file" ]; then
+              name="${file%.*}"
+              cat $file | python3 lex.py > output
+              
+              diff output "expected/$name.out" > output_diff
+              status = $?
+              if [ status -eq 0]; then
+                echo "OK."
+              fi
+              else
+                echo "Failed. See diff below."
+                cat output_diff
+                exit 1
             fi
           done
