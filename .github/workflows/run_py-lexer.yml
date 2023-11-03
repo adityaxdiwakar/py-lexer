@@ -43,8 +43,8 @@ jobs:
               cat $file | python3 lex.py > output
               
               diff output "tests/expected/$name.out" > output_diff
-              status = $?
-              if [ status -eq 0]; then
+              status=$?
+              if [ status != 0 ]; then
                 echo "OK."
               else
                 echo "Failed. See diff below."
