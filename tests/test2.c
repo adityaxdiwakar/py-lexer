@@ -8,7 +8,7 @@ int main() {
 
 /*
 DIRECTIVE
-STR
+STR(stdio.h)
 INT_WORD
 IDENT(main)
 LBRACK
