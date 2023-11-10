@@ -43,7 +43,7 @@ LANG_NUMBERS_FLOAT = LANG_NUMBERS + ["."]
 
 LANG_FIRST_LETTER_IDENT = [chr(a) for a in list(range(65, 91)) + list(range(97, 123))] + ["#"]
 LANG_IDENT = LANG_FIRST_LETTER_IDENT + ["_"] + LANG_NUMBERS
-LANG_RESERVED = ["int", "float", "while", "if", "return"]
+LANG_RESERVED = ["int", "float", "while", "if", "else", "void", "return"]
 LANG_PAIRS = ["(", ")", "{", "}"]
 LANG_OPERATORS = ["&", "!", "-", "+", "=", "/", "*", ">", "<"]
 
