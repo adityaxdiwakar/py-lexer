@@ -10,9 +10,11 @@ gen = get_char()
 # tokens
 INT_WORD    = "INT_WORD"
 FLOAT_WORD  = "FLOAT_WORD"
+CHAR_WORD   = "CHAR_WORD"
 INT         = "INT"
 FLOAT       = "FLOAT"
 STR         = "STR"
+CHAR        = "CHAR"
 IDENT       = "IDENT"
 WHILE       = "WHILE"
 NEQ         = "NEQ"
@@ -43,7 +45,7 @@ LANG_NUMBERS_FLOAT = LANG_NUMBERS + ["."]
 
 LANG_FIRST_LETTER_IDENT = [chr(a) for a in list(range(65, 91)) + list(range(97, 123))] + ["#"]
 LANG_IDENT = LANG_FIRST_LETTER_IDENT + ["_"] + LANG_NUMBERS
-LANG_RESERVED = ["int", "float", "while", "if", "else", "void", "return"]
+LANG_RESERVED = ["int", "float", "while", "if", "else", "void", "return", "char"]
 LANG_PAIRS = ["(", ")", "{", "}"]
 LANG_OPERATORS = ["&", "!", "-", "+", "=", "/", "*", ">", "<"]
 
@@ -63,6 +65,7 @@ tokens = []
 ident_flag = False 
 numerical_flag = False
 str_flag = False
+char_flag = False
 for character in gen:
     # start string consuming procedure
     if not str_flag and character == '"':
@@ -74,8 +77,19 @@ for character in gen:
             str_flag = False
             tokens.append(Token(STR, buffer))
             buffer = ""
+    
+    #same thing as consuming string, but checking for ' instead
+    if not char_flag and character == '\'':
+        char_flag = True
+    elif char_flag:
+        if character != "\'":
+            buffer += character
+        else:
+            char_flag = False
+            tokens.append(Token(CHAR, buffer))
+            buffer = ""
 
-    if not str_flag:
+    if not str_flag and not char_flag:
         if not ident_flag and character in LANG_FIRST_LETTER_IDENT:
             ident_flag = True
             buffer += character
@@ -97,7 +111,7 @@ for character in gen:
             ident_flag = False
             buffer = ""
 
-    if not str_flag and not ident_flag:
+    if not str_flag and not ident_flag and not char_flag:
         if not numerical_flag and character in LANG_NUMBERS:
             buffer += character
             numerical_flag = True
@@ -111,7 +125,7 @@ for character in gen:
                 buffer = ""
 
 
-    if not str_flag:
+    if not str_flag and not char_flag:
         if character == ";": tokens.append(Token(SEMI))
         if character == ",": tokens.append(Token(COMMA))
 
@@ -133,6 +147,9 @@ for character in gen:
             if character == "}": tokens.append(Token(RBRACK))
             ident_flag = False
             buffer = ""
+        
+    if not char_flag:
+        if buffer == "char": tokens.append(Token(CHAR_WORD))
 
 
 for token in tokens: print(token)
