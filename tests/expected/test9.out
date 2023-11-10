@@ -1,0 +1,35 @@
+INT
+MAIN
+LPAREN
+RPAREN
+LBRACK
+INT
+IDENT(number)
+EQUALS
+INT(10)
+SEMI
+IF
+LPAREN
+IDENT(number)
+GT
+INT(5)
+RPAREN
+LBRACK
+IDENT(printf)
+LPAREN
+STR("The number is greater than 5.\n")
+RPAREN
+SEMI
+RBRACK
+ELSE
+LBRACK
+IDENT(printf)
+LPAREN
+STR("The number is not greater than 5.\n")
+RPAREN
+SEMI
+RBRACK
+RETURN
+INT(0)
+SEMI
+RBRACK
