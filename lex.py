@@ -91,6 +91,8 @@ for character in gen:
                 elif buffer == "float": tokens.append(Token(FLOAT_WORD))
                 elif buffer == "while": tokens.append(Token(WHILE))
                 elif buffer == "if": tokens.append(Token(IF))
+                elif buffer == "else": tokens.append(Token(ELSE))
+                elif buffer == "void": tokens.append(Token(VOID_WORD))
                 elif buffer == "return": tokens.append(Token(RETURN))
             ident_flag = False
             buffer = ""
