@@ -37,6 +37,8 @@ GT          = "GT"
 LT          = "LT"
 DIRECTIVE   = "DIRECTIVE"
 ANDREF      = "ANDREF"
+VOID_WORD   = "VOID_WORD"
+ELSE        = "ELSE"
 
 LANG_NUMBERS = list(map(str, range(0, 10)))
 LANG_NUMBERS_FLOAT = LANG_NUMBERS + ["."]
